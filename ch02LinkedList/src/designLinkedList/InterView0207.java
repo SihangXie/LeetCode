@@ -43,7 +43,7 @@ public class InterView0207 {
 
     //我写的版本
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        if (headA == null || headB == null) {
+        if (headA == null || headB == null) { //如果两个节点为空，则直接返回null
             return null;
         }
         ListNode vHeadA = new ListNode(0, headA); //创建虚拟头节点
@@ -63,15 +63,17 @@ public class InterView0207 {
         int diff = Math.abs(lenA - lenB); //两链表长度之差
         temp1 = vHeadA.next;
         temp2 = vHeadB.next;
-        while (diff > 0) { //移动到两个链表尾端对齐的状态
-            if (lenA >= lenB) { //确保较长的链表移动指针对齐
-                temp1 = temp1.next;
-            } else {
-                temp2 = temp2.next;
+        if (diff != 0) { //如果两个链表长度相等，不用进来
+            while (diff > 0) { //移动到两个链表尾端对齐的状态
+                if (lenA >= lenB) { //确保较长的链表移动指针对齐
+                    temp1 = temp1.next;
+                } else {
+                    temp2 = temp2.next;
+                }
+                diff--;
             }
-            diff--;
         }
-        while (temp1.next != null) {
+        while (temp1 != null) { //这里不要用temp1.next != null，否则最后一个节点无法比较地址
             if (temp1 == temp2) { //找到相交节点
                 return temp1;
             }
